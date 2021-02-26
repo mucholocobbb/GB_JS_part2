@@ -27,6 +27,10 @@
     border-radius: 5px;
 }
 
+.btn-cart:hover {
+    filter: brightness(80%);
+}
+
 .main {
     display: flex;
     justify-content: center;
