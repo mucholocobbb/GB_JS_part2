@@ -9,7 +9,6 @@ class ProductList {
     #allProducts;
   
     constructor(container = '.products') {
-      console.log('constructor');
       this.container = container;
       // this._goods = [];
       this.#goods = [];
@@ -51,7 +50,6 @@ class ProductList {
   
       this.#goods.forEach((product) => {
         const productObject = new ProductItem(product);
-        console.log(productObject);
         this.#allProducts.push(productObject);
         block.insertAdjacentHTML('beforeend', productObject.render());
       });

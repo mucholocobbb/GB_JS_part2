@@ -90,3 +90,55 @@
     align-self: center;
     margin: 20px;
 }
+
+/* burger page */
+
+.burger{
+    height: 100px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: 32px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.price{
+    height: 24px;
+    width: 120px;
+    border-radius: 3px;
+    border: 1px solid #000;
+    margin-left: 120px;
+    text-align: center;
+    line-height: 24px;
+}
+.cal{
+    height: 24px;
+    margin-left: 20px;
+    width: 120px;
+    border-radius: 3px;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 24px;
+
+}
+.check_btn{
+    margin-left: 20px;
+    border: 1px solid #000;
+    height: 24px;
+    width: 80px;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px -5px black;
+}
+.check_btn:hover {
+    background-color: rgba(229, 236, 241, 0.884);
+}
+.check_btn:active {
+    box-shadow: 0 0 10px -3px black;
+
+}
+.size{
+    margin-right: 20px;
+}
