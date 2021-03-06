@@ -1,8 +1,20 @@
 
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+
 let header = document.querySelector('header');
 header.classList.add('header');
 let main = document.querySelector('main');
 main.classList.add('main');
+
+// Promise Version #Pr
+const getProducts = (data) => {
+  return new Promise((resolve, reject) => {
+      if (data) resolve(data);
+      else reject('Error');
+});
+}
+
 
 class ProductList {
     #goods;
@@ -10,47 +22,66 @@ class ProductList {
   
     constructor(container = '.products') {
       this.container = container;
-      // this._goods = [];
-      this.#goods = [];
-      this.#allProducts = [];
+      this.goods = [];
+      this.allProducts = [];
   
-      this.#fetchGoods();
-      this.#render();
+      //#Pr
+      this.showProducts(`${API}/catalogData.json`);
+      
+
+      // this.#fetchGoods()
+      //         .then((data) => {
+      //             this.#goods = [...data];
+      //             this.#render();
+      //          });;
   
-    }
-  
-    getTotalPrice(){
-      let finalPrice = 0;
-      this.#allProducts.forEach(function(product){
-        let price =  new ProductItem(product).getPrice();
-        finalPrice += price;
-      })
-     return finalPrice;
-    }
-  
-    getDiscount(sale){
-      return this.getTotalPrice() - (this.getTotalPrice() * (sale / 100));
     }
 
-    showTotalPrice(){
-      document.querySelector('.final_price').insertAdjacentHTML('beforeend',`${this.getTotalPrice()} \u20bd`);
+
+    showSum(){
+      document.querySelector('.final_price')
+      .insertAdjacentHTML('beforeend', `${this.allProducts.reduce((accum, item) => accum + item.price, 0)} \u20bd`);
     }
-  
-    #fetchGoods() {
-      this.#goods = [
-        {id: 1, title: 'Notebook', price: 20000},
-        {id: 2, title: 'Mouse', price: 1500},
-        {id: 3, title: 'Keyboard', price: 5000},
-        {id: 4, title: 'Gamepad', price: 4500},
-      ];
-    }
+
+
+    //#Pr
+    showProducts(url){
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status !== 200) {
+            console.log('Error');
+          } else {
+            getProducts(xhr.responseText)
+              .then((data) => {
+                  this.goods = JSON.parse(data);
+                  this.#render();
+                  this.showSum();
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      }
+      xhr.send();
+    };
+
+    // #fetchGoods() {
+    //   return fetch(`${API}/catalogData.json`)
+    //       .then((response) => response.json())
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    // }
   
     #render() {
       const block = document.querySelector(this.container);
   
-      this.#goods.forEach((product) => {
+      this.goods.forEach((product) => {
         const productObject = new ProductItem(product);
-        this.#allProducts.push(productObject);
+        this.allProducts.push(productObject);
         block.insertAdjacentHTML('beforeend', productObject.render());
       });
     }
@@ -58,9 +89,9 @@ class ProductList {
   
   class ProductItem {
     constructor(product, img='https://placehold.it/200x150') {
-      this.title = product.title;
+      this.title = product.product_name;
       this.price = product.price;
-      this.id = product.id;
+      this.id = product.id_product;
       this.img = img;
     }
   
@@ -75,13 +106,9 @@ class ProductList {
             </div>`;
     }
   
-    getPrice() {
-      return this.price;
-    }
   }
   
   const productList = new ProductList();
-  productList.showTotalPrice();
   
   
   //       //Корзина товаров
