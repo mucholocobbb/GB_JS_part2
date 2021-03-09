@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reg</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="text">
+        One: 'Hi Mary.' Two: 'Oh, hi.'
+        One: 'How are you doing?'
+        Two: 'I'm doing alright. How about you?'
+        One: 'Not too bad. The weather is great isn't it?'
+        Two: 'Yes. It's absolutely beautiful today.'
+        One: 'I wish it was like this more frequently.'
+        Two: 'Me too.'
+        One: 'So where are you going now?'
+        Two: 'I'm going to meet a friend of mine at the department store'
+        One: 'Going to do a little shopping?'
+        Two: 'Yeah, I have to buy some presents for my parents.'
+        One: 'What's the occasion?'
+        Two: 'It's their anniversary.'
+        One: 'That's great. Well, you better get going. You don't want to be late.'
+        Two: 'I'll see you next time.'
+        One: 'Sure.' Bye.'
+    </h1>
+<div class="cont">
+    <form action="#" class="form">
+        <label for="name">NAME</label>
+        <p id="nameAtt" class="textHidden attentionText">Put true Name!!!</p>
+        <input type="text" id="name" class="input" placeholder="Your Name" >
+        <label for="phone">PHONE</label>
+        <p id="phoneAtt" class="textHidden attentionText">Put true Phone!!!</p>
+        <input type="text" name="phone" id="phone" class="input" placeholder="Your Phone" >
+        <label for="email">EMAIL</label>
+        <p id="emailAtt" class="textHidden attentionText">Put true Email!!!</p>
+        <input type="text" id="email" class="input" placeholder="You Email" >
+        <label for="area">COMMENT</label>
+        <textarea name="area" id="area" cols="30" rows="10" class="input" placeholder="Send message to us..."></textarea>
+        <div class="btn">
+            <button id="sendBtn"  class="buttons">SEND</button>
+            <button type="reset"  class="buttons">RESET</button>
+        </div>
+
+    </form>
+</div>
+    <script>
+
+        class CheckForm {
+            constructor(){
+                this.inputParam = [
+                    ['#name', /\b[a-zA-Zа-яА-ЯёЁ]+\b/i ,'#nameAtt'],
+                    ['#phone', /\b\+[7]|[8]\(\d{3}\)\d{3}\-\d{4}\b/, '#phoneAtt'],
+                    ['#email', /\b\w+[@]\w+\.ru\b|com\b|net\b|ua\b/i, '#emailAtt']
+                ];
+                this.checkAll();
+            }
+            checkAll(){
+                let form = document.querySelector('.form');
+                let sucForm = document.querySelector('.succefulForm');
+                let click = document.querySelector('#sendBtn');
+                click.addEventListener('click',(event) => {
+                    event.preventDefault()
+                    for(let i = 0; i < this.inputParam.length; i++){
+                        this.checkName(...this.inputParam[i]);
+                    }
+                    console.log(this.getComment());
+                });
+                }
+            checkName(selector, reg, id){
+                let name = document.querySelector(selector);
+                let redText = document.querySelector(id);
+                let nameText = name.value;
+                let regExp = reg.test(nameText);
+                if(regExp){
+                   this.goodChange(name);
+                    if(!redText.classList.contains('textHidden')){
+                        redText.classList.add('textHidden')
+                    }
+                } else{
+                    this.badChange(name);
+                    if(redText.classList.contains('textHidden')){
+                        redText.classList.remove('textHidden')
+                    }
+                }
+            }
+            getComment(){
+               let comment = document.querySelector('#area').value
+               return comment;
+            }
+            goodChange(input){
+                if(input.classList.contains('redBorder')){
+                    input.classList.remove('redBorder');
+                };
+                input.classList.add('greenBorder');
+            }
+            badChange(input){
+                if(input.classList.contains('greenBorder')){
+                    input.classList.remove('greenBorder');
+                };
+                input.classList.add('redBorder');
+            }
+        }
+        let checkForm = new CheckForm();
+    </script>
+    <script>
+        let text = document.querySelector('h1').innerHTML;
+        console.log(text.replace(/'/g, '"')) //- зампеняем все ' на "
+
+        console.log(text.replace(/'(?![a-z]+)/g, '"')) 
+        // заменяем символ (') во всем тексте, если  после него не идет несколько букв в НИЖНЕМ регистре. 
+        console.log(text.replace(/'(?!\b[a-z]+)/g, '"')) 
+        //заменяем все одинарные ковычки на двойные, при условии -если после нее не идет набор букв являющийся началом слова.
+
+    </script>
+</body>
+</html>
