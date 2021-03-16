@@ -13,9 +13,6 @@ const app = new Vue({
       cartProducts: [],
       searchLine: '',
       visible: true,
-      cartCount: 0,
-      filterCount: 0,
-
 
   },
   methods: {
@@ -31,101 +28,57 @@ const app = new Vue({
         this.getJson(`${API}/addToBasket.json`)
           .then(data => {
             if(data.result === 1){
-              let productId = element.id_product;
-              let find = this.cartProducts.find(product => product.id_product === productId);
+              let find = this.cartProducts.find(el => el.id_product === element.id_product);
               if(find){
                 find.quantity++;
-
               } else {
-                let product = {
-                  id_product: productId,
-                  price: element.price,
-                  product_name: element.product_name,
-                  quantity: 1
-                };
+                let product = Object.assign({quantity: 1}, element);
                 this.cartProducts.push(product);
-                this.cartCount = this.cartProducts.length
-
               }
             } else {
               alert('Error');
             }
           })
       },      
-      removeProduct(element){
+      removeProduct(el){
         this.getJson(`${API}/deleteFromBasket.json`)
           .then(data => {
             if(data.result === 1){
-              let productId = element.id_product;
-              let find = this.cartProducts.find(product => product.id_product === productId);
-              if(find.quantity > 1){
-                find.quantity--;
+              if(el.quantity > 1){
+                el.quantity--;
               } else { 
-                this.cartProducts.splice(this.cartProducts.indexOf(find), 1);
-                document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
-                this.cartCount = this.cartProducts.length
+                this.cartProducts.splice(this.cartProducts.indexOf(el), 1);
               }
-            } else {
-              alert('Error');
-            }
+            } 
           })
       },
 
       filterGoods(){
         const regexp = new RegExp(this.searchLine, 'i');
-        this.filtered = this.products.filter(product => regexp.test(product.product_name));
-        this.products.forEach(el => {
-          const block = document.querySelector(`.product-item[id="${el.id_product}"]`);
-          if(!this.filtered.includes(el)){
-            block.classList.add('hidden');
-          } else {
-            block.classList.remove('hidden');
-          }
-        })
-        this.filterCount = this.filtered.length
+        this.filtered = this.products.filter(el => regexp.test(el.product_name));
       }
 
   },
-  beforeCreate() {
 
-  },
-  created() {
-      this.getJson(`${API + this.catalogUrl}`)
-          .then(data => {
-              for(let el of data){
-                  this.products.push(el);
-              }
-              this.filterCount = this.products.length
-          })
-          .catch(err =>{
-            document.querySelector('.products').insertAdjacentHTML('beforeend', '<p class="outProductsText"> Список товаров пуст...</p>')
-          });
-
-      this.getJson(`${API + this.cartUrl}`)
-          .then(data => {
-              for(let el of data.contents){
-                  this.cartProducts.push(el);
-              }
-              this.cartCount = this.cartProducts.length;
-          });
-  
-  },
-  beforeMount() {
-
-  },
   mounted() {
+    this.getJson(`${API + this.catalogUrl}`)
+    .then(data => {
+        for(let el of data){
+            this.products.push(el);
+            this.filtered.push(el);
+        }
+    })
+    .catch(err =>{
+      document.querySelector('.products').insertAdjacentHTML('beforeend', '<p class="outProductsText"> Список товаров пуст...</p>')
+    });
+
+this.getJson(`${API + this.cartUrl}`)
+    .then(data => {
+        for(let el of data.contents){
+            this.cartProducts.push(el);
+        }
+    });
 
   },
-  beforeUpdate() {
 
-  },
-  updated() {
-
-  },
-  beforeDestroy() {
-
-  },
-  destroyed() {
-
-  }
 });
