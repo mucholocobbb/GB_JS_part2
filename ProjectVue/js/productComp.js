@@ -4,7 +4,7 @@ Vue.component('products', {
             catalogUrl: '/catalogData.json', //здесь ошибка в адресе, для показа заглушки.
             products: [],
             filtered: [],
-            imgCatalog: 'https://placehold.it/200x150',
+            imgCatalog: 'https://via.placeholder.com/200x150?text=Picture+in+this+place',
         }
     },
     mounted() {
