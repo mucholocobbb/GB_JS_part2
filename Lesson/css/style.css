@@ -27,6 +27,93 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.header_right{
+    position: relative;
+}
+
+.cart_list{
+    position: absolute;
+    width: 300px;
+    min-height: 40px;
+    right: 0;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0px 5px 22px -10px black;
+
+}
+
+.cart_listHidden{
+    display: none;
+}
+.cart_item{
+    width: 250px;
+    min-height: 80px;
+    margin: 10px;
+    background-color: rgba(238, 230, 230, 0.719);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.product-bio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.right-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column-reverse;
+    background-color: rgba(211, 198, 198, 0.719);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.product-desc {
+    padding: 5px;
+}
+
+.del-btn {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(243, 101, 101, 0.747);
+    border-radius: 5px;
+    border: 0;
+    padding: 0;
+}
+
+.del-btn:hover {
+    background-color: rgba(238, 64, 64, 0.747);
+}
+
+.del-btn:active {
+    box-shadow: inset 0 0 14px -6px black;
+
+}
+
+.totalPrice{
+    height: 20px;
+    width: 100px;
+    background-color: rgba(255, 255, 255, 0.747);
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.finalPrice{
+    padding: 10px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
 .final_price{
     height: 40px;
     width: 100px;
@@ -91,54 +178,3 @@
     margin: 20px;
 }
 
-/* burger page */
-
-.burger{
-    height: 100px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    margin: 32px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.price{
-    height: 24px;
-    width: 120px;
-    border-radius: 3px;
-    border: 1px solid #000;
-    margin-left: 120px;
-    text-align: center;
-    line-height: 24px;
-}
-.cal{
-    height: 24px;
-    margin-left: 20px;
-    width: 120px;
-    border-radius: 3px;
-    border: 1px solid #000;
-    text-align: center;
-    line-height: 24px;
-
-}
-.check_btn{
-    margin-left: 20px;
-    border: 1px solid #000;
-    height: 24px;
-    width: 80px;
-    text-align: center;
-    line-height: 24px;
-    border-radius: 3px;
-    box-shadow: 0 0 10px -5px black;
-}
-.check_btn:hover {
-    background-color: rgba(229, 236, 241, 0.884);
-}
-.check_btn:active {
-    box-shadow: 0 0 10px -3px black;
-
-}
-.size{
-    margin-right: 20px;
-}
